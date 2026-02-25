@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Home - TaskMate{% endblock %}
+
+{% block content %}
+
+<div class="container">
+</div>
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://img.freepik.com/free-vector/colorful-todo-list-illustration_1308-173328.jpg?semt=ais_user_personalization&w=740&q=80" alt="" width="200" height="200">
+    <h1 class="display-5 fw-bold text-body-emphasis">Your ToDoList Manager</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Let's bring structure to your daily tasks and boost productivity! <br> Today is {{ day }}.</p>
+    </div>
+    <br>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="container alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3 container">
+            <input type="text" class="form-control" name="task" placeholder="Enter a new task" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+    <br>
+
+    <table class="container table table-hover table-striped table-bordered">
+        <thead>
+            <tr class="table-light">
+                <th scope="col">ID</th>
+                <th scope="col">Task</th>
+                <th scope="col">Status</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in page_obj %}
+                {% if task.done %}
+                    <tr class="table-success">
+                        <th scope="row"> {{ task.id }}</th>
+                        <th scope="row"><del>{{ task.task }}</del></th>
+                        <td>Completed</td>
+                        <td><a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-warning">Edit</a></td>
+                        <td><a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                {% else %}
+                    <tr class="table-secondary">
+                        <th scope="row">{{ task.id }}</th>
+                        <th scope="row">{{ task.task }}</th>
+                        <td>Uncompleted</td>
+                        <td><a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-warning">Edit</a></td>
+                        <td><a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        {% endif %}
+
+</div>
+
+{% endblock %}

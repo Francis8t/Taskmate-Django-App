@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Edit Task - TaskMate{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% if task.owner == request.user %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="task" class="form-label">Task</label>
+                <input type="text" class="form-control" id="task" name="task" value="{{ task.task }}" required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="done" name="done" {% if task.done %}checked{% endif %}>
+                <label class="form-check-label" for="done">Mark as Done</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Task</button>
+        </form>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            You do not have permission to edit this task.
+    {% endif %}
+</div>
+
+{% endblock %}

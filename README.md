@@ -102,14 +102,16 @@ WhiteNoise.
 
 ### 1. Clone Repository
 
-```git clone
+`git clone
 https://github.com/`<your-username>`{=html}/Taskmate-Django-App.git\
-cd Taskmate-Django-App```
+cd Taskmate-Django-App`
 
 ### 2. Create Virtual Environment
 
-```python -m venv venv\
-source venv/bin/activate```
+```python 
+python -m venv venv\
+source venv/bin/activate
+```
 
 ### 3. Install Dependencies
 
@@ -119,7 +121,8 @@ source venv/bin/activate```
 
 Create `.env` in project root:
 
-```DJANGO_SECRET_KEY=your-secret-key\
+```bash
+DJANGO_SECRET_KEY=your-secret-key\
 DJANGO_DEBUG=True
 
 DB_ENGINE=django.db.backends.postgresql\
@@ -127,7 +130,8 @@ DB_NAME=todolist\
 DB_USER=your-db-user\
 DB_PASSWORD=your-db-password\
 DB_HOST=localhost\
-DB_PORT=5432```
+DB_PORT=5432
+```
 
 ### 5. Run Migrations
 

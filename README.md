@@ -2,30 +2,35 @@
 
 ### Production-Ready Django Task Management Platform
 
-Taskmate is a modular, PostgreSQL-backed Django application designed to
-demonstrate clean architecture, secure configuration management, and
-production deployment readiness.
+TaskMate is a modular, PostgreSQL-backed Django application designed to demonstrate clean architecture, secure authentication, and production-grade deployment practices.
 
-This project showcases practical backend engineering principles
-including:
+The system supports both traditional server-rendered views and a RESTful API layer secured with JWT authentication, making it suitable for modern web and mobile integrations.
 
--   Environment-based configuration
--   Secure authentication flows
--   PostgreSQL integration
--   Static asset management for production
--   Clean app separation
--   Deployment readiness (Gunicorn + WhiteNoise)
+This project showcases practical backend engineering principles including:\
+	•	Environment-based configuration management\
+	•	Secure authentication (Session + JWT)\
+	•	REST API design with Django REST Framework\
+	•	User-scoped data access and permission handling\
+	•	PostgreSQL integration and ORM modeling\
+	•	Static asset handling for production (WhiteNoise)\
+	•	Clean modular app separation\
+	•	Production deployment readiness (Gunicorn)\
+	•	Stateless API security for scalable systems\
 
 
 ## 🏗 Architecture Overview
 
-Client (Browser)\
-↓\
-Gunicorn (WSGI Server)\
-↓\
-Django Application\
-↓\
-PostgreSQL Database
+Web Browser\
+   ↓\
+Django Views (Session Auth)\
+   ↓\
+API Clients (Mobile / Frontend / Postman)\
+   ↓\
+Django REST Framework\
+   ↓\
+JWT Authentication\
+   ↓\
+Database
 
 P.S: In production environments without Nginx, static files are served via
 WhiteNoise.
@@ -177,8 +182,6 @@ This project demonstrates:
 
 ## Potential Enhancements
 
--   REST API via Django REST Framework
--   JWT-based authentication
 -   Docker containerization
 -   CI/CD pipeline integration
 -   S3-based static asset storage

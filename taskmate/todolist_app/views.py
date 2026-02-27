@@ -6,6 +6,8 @@ from .form import TaskForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required   
+from rest_framework import generics, permissions
+from .serializers import TaskSerializer
     
 
 @login_required # Decorator to require login for accessing the index view
@@ -67,3 +69,27 @@ def edit_task(request, task_id):
 
 def home(request):
     return render(request, 'todolist_app/home.html',{})
+
+# API view for creating and listing tasks
+class TaskListCreateView(generics.ListCreateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return TaskList.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+        
+        
+from rest_framework import generics, permissions
+from .models import TaskList
+from .serializers import TaskSerializer
+
+# API view for retrieving, updating, and deleting a specific task
+class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return TaskList.objects.filter(owner=self.request.user)

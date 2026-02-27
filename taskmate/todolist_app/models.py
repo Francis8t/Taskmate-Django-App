@@ -8,4 +8,4 @@ class TaskList(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True) # Add owner field to associate tasks with users
     
     def __str__(self):
-        return self.task + " - " + str(self.done)
+        return self.task +   " - " + str(self.done)

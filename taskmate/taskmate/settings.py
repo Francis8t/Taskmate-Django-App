@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import environ
 from pathlib import Path
+from datetime import timedelta
 
 env = environ.Env()
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'users',
     'crispy_forms',
     'crispy_bootstrap5',
+    'rest_framework',
     
 ]
 
@@ -153,4 +155,13 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 
-print("BASE_DIR:", BASE_DIR)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
